@@ -1,0 +1,26 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.App{
+  height:100vh;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.App input{
+  background: none;
+  border: 5px solid #2b2b2b;
+  outline: none;
+  width:40%;
+}
+
+.App button{
+  margin-top: 20px;
+}
