@@ -10,10 +10,19 @@ app.get('/', (req, res) => {
     res.send('Api is running');
 });
 
-app.get('/download', (req, res) => {
-    var url = req.query.url;
-    res.header('Content-Disposition', 'attachment; filename="video.mp4"');
-    ytdl(url, {format: 'mp4'}).pipe(res);
+app.get('/download', async (req, res) => {
+    const url = req.query.url;
+    const info = await ytdl.getInfo(url);
+    const videoTitle = info.videoDetails.title;
+
+    const videoFormat = ytdl.chooseFormat(info.formats, { quality: 'highest' });
+    const videoSize = videoFormat.contentLength;
+
+    res.setHeader('Content-Disposition', `attachment; filename="${videoTitle}.mp4"`);
+    res.setHeader('Content-Length', videoSize);
+    res.setHeader('Content-Type', 'video/mp4');
+
+    ytdl(url, { format: 'mp4' }).pipe(res);
 });
 
 app.listen(4000, () => {
